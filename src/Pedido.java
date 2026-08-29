@@ -1,13 +1,15 @@
-public abstract class Pedido {
+public abstract class Pedido  implements Despachable, Cancelable, Rastreable{
 
     private int idPedido;
     private String direccionEntrega;
     private double distanciaKm;
+    private ControladorDeEnvios controlador;
 
-    public Pedido(int idPedido, String direccionEntrega, double distanciaKm) {
+    public Pedido(int idPedido, String direccionEntrega, double distanciaKm, ControladorDeEnvios controlador) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
+        this.controlador = controlador;
     }
 
     public void mostrarResumen() {
@@ -40,5 +42,17 @@ public abstract class Pedido {
 
     public void setDistanciaKm(double distanciaKm) {
         this.distanciaKm = distanciaKm;
+    }
+
+    public ControladorDeEnvios getControlador(){
+        return controlador;
+    }
+
+    public void asignarRepartidor(){
+        System.out.println("Asignando repartidor para el pedido...");
+    }
+
+    public void asignarRepartidor(String nombre){
+        System.out.println("Pedido asignado a: " + nombre);
     }
 }
