@@ -1,28 +1,20 @@
-SpeedFast
+# SpeedFast - Semana 3
 
-Proyecto desarrollado para la actividad de la Semana 2 de Desarrollo Orientado a Objetos II.
+Proyecto desarrollado en Java para la gestión de pedidos de SpeedFast.
 
-Descripción
+## Contenidos
 
-El proyecto simula un sistema de gestión de pedidos para una empresa de reparto. Se implementa una clase abstracta Pedido y tres clases derivadas:
+- Clase abstracta `Pedido`.
+- Herencia con `PedidoComida`, `PedidoEncomienda` y `PedidoExpress`.
+- Polimorfismo mediante sobreescritura y sobrecarga.
+- Interfaces `Despachable`, `Cancelable` y `Rastreable`.
+- Controlador de envíos e historial mediante `ArrayList`.
+- Simulación de las funcionalidades mediante `Main`.
 
-PedidoComida
-PedidoEncomienda
-PedidoExpress
+## Ejecución
 
-Cada tipo de pedido implementa su propia lógica para calcular el tiempo estimado de entrega.
+Ejecutar la clase `Main` desde IntelliJ IDEA para visualizar la simulación por consola.
 
-Conceptos aplicados
-Clases abstractas.
-Métodos abstractos.
-Herencia.
-Polimorfismo.
-Sobreescritura de métodos.
-Encapsulamiento.
-Ejecución
-
-El programa se ejecuta desde la clase Main, donde se crean distintos tipos de pedidos y se muestra su información junto con el tiempo estimado de entrega.
-
-Autor
+## Autor
 
 Vicente Sepúlveda
