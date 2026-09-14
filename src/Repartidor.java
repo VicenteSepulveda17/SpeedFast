@@ -1,44 +1,37 @@
-import java.sql.SQLOutput;
+import java.util.List;
 
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private ZonaDeCarga zonaDeCarga;
+    private List<Pedido> pedidos;
 
-    public Repartidor(String nombre, ZonaDeCarga zonaDeCarga) {
+    public Repartidor(String nombre, List<Pedido> pedidos) {
         this.nombre = nombre;
-        this.zonaDeCarga = zonaDeCarga;
+        this.pedidos = pedidos;
     }
 
     @Override
     public void run() {
 
-        while (true) {
+        // Recorre todos los pedidos que tiene asignados el repartidor
+        for (Pedido pedido : pedidos) {
 
-            Pedido pedido = zonaDeCarga.retirarPedido();
-
-            if (pedido == null) {
-                break;
-            }
-
-            System.out.println("[Repartidor - " + nombre + "] Retirando pedido #" + pedido.getId());
-
-            pedido.setEstado(EstadoPedido.EN_REPARTO);
-
-            System.out.println("[Repartidor - " + nombre + "] Pedido #" + pedido.getId() +
-                    " en reparto. Estado: " + pedido.getEstado());
+            System.out.println("[Repartidor: " + nombre + "] Entregando pedido #"
+                    + pedido.getIdPedido());
 
             try {
-                Thread.sleep(2000);
+                // Simula un tiempo de entrega aleatorio entre 1 y 4 segundos
+                int tiempo = 1000 + (int) (Math.random() * 3000);
+                Thread.sleep(tiempo);
+
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                return;
             }
 
-            pedido.setEstado(EstadoPedido.ENTREGADO);
+            System.out.println("[Repartidor: " + nombre + "] Pedido #"
+                    + pedido.getIdPedido() + " entregado.");
 
-            System.out.println("[Repartidor - " + nombre + "] Pedido #" + pedido.getId() +
-                    " entregado. Estado: " + pedido.getEstado());
+            pedido.getControlador().registrarEntrega(pedido);
         }
     }
 }
