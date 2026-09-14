@@ -1,37 +1,44 @@
-import java.util.List;
+import java.sql.SQLOutput;
 
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private List<Pedido> pedidos;
+    private ZonaDeCarga zonaDeCarga;
 
-    public Repartidor(String nombre, List<Pedido> pedidos) {
+    public Repartidor(String nombre, ZonaDeCarga zonaDeCarga) {
         this.nombre = nombre;
-        this.pedidos = pedidos;
+        this.zonaDeCarga = zonaDeCarga;
     }
 
     @Override
     public void run() {
 
-        // Recorre todos los pedidos que tiene asignados el repartidor
-        for (Pedido pedido : pedidos) {
+        while (true) {
 
-            System.out.println("[Repartidor: " + nombre + "] Entregando pedido #"
-                    + pedido.getIdPedido());
+            Pedido pedido = zonaDeCarga.retirarPedido();
 
-            try {
-                // Simula un tiempo de entrega aleatorio entre 1 y 4 segundos
-                int tiempo = 1000 + (int) (Math.random() * 3000);
-                Thread.sleep(tiempo);
-
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            if (pedido == null) {
+                break;
             }
 
-            System.out.println("[Repartidor: " + nombre + "] Pedido #"
-                    + pedido.getIdPedido() + " entregado.");
+            System.out.println("[Repartidor - " + nombre + "] Retirando pedido #" + pedido.getId());
 
-            pedido.getControlador().registrarEntrega(pedido);
+            pedido.setEstado(EstadoPedido.EN_REPARTO);
+
+            System.out.println("[Repartidor - " + nombre + "] Pedido #" + pedido.getId() +
+                    " en reparto. Estado: " + pedido.getEstado());
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+
+            pedido.setEstado(EstadoPedido.ENTREGADO);
+
+            System.out.println("[Repartidor - " + nombre + "] Pedido #" + pedido.getId() +
+                    " entregado. Estado: " + pedido.getEstado());
         }
     }
 }

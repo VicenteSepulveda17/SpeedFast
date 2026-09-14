@@ -1,58 +1,51 @@
-public abstract class Pedido  implements Despachable, Cancelable, Rastreable{
+public class Pedido  {
 
-    private int idPedido;
+    private int id;
     private String direccionEntrega;
-    private double distanciaKm;
-    private ControladorDeEnvios controlador;
+    private EstadoPedido estado;
 
-    public Pedido(int idPedido, String direccionEntrega, double distanciaKm, ControladorDeEnvios controlador) {
-        this.idPedido = idPedido;
+    public Pedido(int id, String direccionEntrega) {
+        this.id = id;
         this.direccionEntrega = direccionEntrega;
-        this.distanciaKm = distanciaKm;
-        this.controlador = controlador;
+        this.estado = EstadoPedido.PENDIENTE;
     }
 
-    public void mostrarResumen() {
-        System.out.println("Pedido #" + idPedido);
-        System.out.println("Dirección: " + direccionEntrega);
-        System.out.println("Distancia: " + distanciaKm + " km");
-    }
-
-    public abstract int calcularTiempoEntrega();
-
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
+    public int getId() {
+        return id;
     }
 
     public String getDireccionEntrega() {
         return direccionEntrega;
     }
 
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setDireccionEntrega(String direccionEntrega) {
         this.direccionEntrega = direccionEntrega;
     }
 
-    public double getDistanciaKm() {
-        return distanciaKm;
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
     }
 
-    public void setDistanciaKm(double distanciaKm) {
-        this.distanciaKm = distanciaKm;
+    public void setEstado(String nuevoEstado) {
+        this.estado = EstadoPedido.valueOf(nuevoEstado);
     }
 
-    public ControladorDeEnvios getControlador(){
-        return controlador;
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", direccionEntrega='" + direccionEntrega + '\'' +
+                ", estado=" + estado +
+                '}';
     }
 
-    public void asignarRepartidor(){
-        System.out.println("Asignando repartidor para el pedido...");
-    }
 
-    public void asignarRepartidor(String nombre){
-        System.out.println("Pedido asignado a: " + nombre);
-    }
 }
